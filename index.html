@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Utility Toolkit</title>
+    <style>
+        :root {
+                    --primary-color: #667eea;
+                    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    --secondary-color: #2ecc71;
+                    --accent-color: #ff6b6b;
+                    --bg-color: #f8f9ff;
+                    --card-bg: #ffffff;
+                    --text-color: #2c3e50;
+                    --border-radius: 16px;
+                    --shadow: 0 8px 32px rgba(0,0,0,0.1);
+                    --shadow-hover: 0 12px 40px rgba(0,0,0,0.15);
+                }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+                    background: linear-gradient(120deg, #f0f4ff 0%, #e8f0ff 100%);
+                    color: var(--text-color);
+                    line-height: 1.6;
+                    padding: 20px;
+                    min-height: 100vh;
+                }
+        
+                .container {
+                    max-width: 900px;
+                    margin: 0 auto;
+                    background: var(--card-bg);
+                    border-radius: var(--border-radius);
+                    box-shadow: var(--shadow);
+                    padding: 30px;
+                    position: relative;
+                    overflow: hidden;
+                }
+        
+                .container::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 4px;
+                    background: var(--primary-gradient);
+                    z-index: 1;
+                }
+        
+                header {
+                    text-align: center;
+                    margin-bottom: 30px;
+                    position: relative;
+                    z-index: 2;
+                }
+        
+                h1 {
+                    background: var(--primary-gradient);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    margin-bottom: 10px;
+                    font-size: 2.5rem;
+                    font-weight: 800;
+                    letter-spacing: -1px;
+                }
+        
+                .subtitle {
+                    color: #666;
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                }
+
+        /* Navigation Tabs */
+        .tabs {
+                    display: flex;
+                    gap: 15px;
+                    margin-bottom: 30px;
+                    background: #fff;
+                    border-radius: 50px;
+                    padding: 8px;
+                    box-shadow: var(--shadow);
+                    position: relative;
+                    z-index: 2;
+                }
+        
+                .tab {
+                    flex: 1;
+                    padding: 15px 20px;
+                    text-align: center;
+                    cursor: pointer;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    border: none;
+                    background: transparent;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    color: #666;
+                    border-radius: 40px;
+                    position: relative;
+                }
+        
+                .tab:hover {
+                    transform: translateY(-2px);
+                    color: var(--primary-color);
+                }
+        
+                .tab.active {
+                    background: var(--primary-gradient);
+                    color: white;
+                    box-shadow: var(--shadow-hover);
+                    transform: translateY(-2px);
+                }
+
+        /* Tool Sections */
+        .tool-section {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .tool-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tool-card {
+                    background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+                    border: 1px solid #eef2ff;
+                    border-radius: var(--border-radius);
+                    padding: 25px;
+                    margin-bottom: 25px;
+                    box-shadow: var(--shadow);
+                    position: relative;
+                    overflow: hidden;
+                    transition: all 0.3s ease;
+                }
+        
+                .tool-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: var(--shadow-hover);
+                }
+        
+                .tool-title {
+                    font-size: 1.4rem;
+                    font-weight: 700;
+                    margin-bottom: 15px;
+                    color: var(--text-color);
+                    position: relative;
+                    padding-left: 40px;
+                }
+        
+                .tool-title::before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 4px;
+                    height: 20px;
+                    background: var(--primary-gradient);
+                    border-radius: 2px;
+                }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input[type="text"],
+                input[type="number"],
+                input[type="date"],
+                select {
+                    width: 100%;
+                    padding: 14px 16px;
+                    border: 2px solid #eef2ff;
+                    border-radius: 12px;
+                    font-size: 1rem;
+                    transition: all 0.3s ease;
+                    background: #fafbff;
+                    font-weight: 500;
+                }
+        
+                input:focus,
+                select:focus {
+                    outline: none;
+                    border-color: var(--primary-color);
+                    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+                    background: #fff;
+                    transform: translateY(-1px);
+                }
+        
+                label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    color: #444;
+                    font-size: 0.9rem;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+                    padding: 14px 24px;
+                    border: none;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    font-weight: 700;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    flex: 1;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                }
+        
+                .btn-primary {
+                    background: var(--primary-gradient);
+                    color: white;
+                    border: none;
+                }
+        
+                .btn-primary:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+                    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+                }
+        
+                .btn-secondary {
+                    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+                    color: white;
+                    border: none;
+                }
+        
+                .btn-secondary:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
+                    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+                }
+
+        /* Results */
+        .result {
+                    background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+                    border: 2px solid #c8e6c9;
+                    border-radius: 12px;
+                    padding: 20px;
+                    margin-top: 20px;
+                    font-size: 1.1rem;
+                    font-weight: 700;
+                    color: #2e7d32;
+                    display: none;
+                    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.1);
+                }
+        
+                .result.show {
+                    display: block;
+                    animation: slideDown 0.3s ease-in;
+                }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Unit Converter Specific */
+        .conversion-grid {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 20px;
+                    margin-bottom: 20px;
+                }
+
+        /* Bill Split Specific */
+        .checkbox-group {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    margin-bottom: 15px;
+                    padding: 12px;
+                    background: #f8f9ff;
+                    border-radius: 12px;
+                    border: 2px solid #eef2ff;
+                    transition: all 0.3s ease;
+                }
+        
+                .checkbox-group:hover {
+                    border-color: var(--primary-color);
+                    background: #f0f4ff;
+                }
+        
+                .checkbox-group input[type="checkbox"] {
+                    width: 18px;
+                    height: 18px;
+                    accent-color: var(--primary-color);
+                    cursor: pointer;
+                }
+        
+                .checkbox-group label {
+                    margin-bottom: 0;
+                    font-size: 0.9rem;
+                    color: #444;
+                    font-weight: 600;
+                    cursor: pointer;
+                    text-transform: none;
+                    letter-spacing: 0;
+                }
+
+        /* Age Calculator Specific */
+        .age-display {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .age-box {
+                    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+                    padding: 20px;
+                    border-radius: 16px;
+                    text-align: center;
+                    border: 2px solid #eef2ff;
+                    transition: all 0.3s ease;
+                    position: relative;
+                    overflow: hidden;
+                }
+        
+                .age-box:hover {
+                    transform: translateY(-5px);
+                    border-color: var(--primary-color);
+                    box-shadow: var(--shadow-hover);
+                }
+        
+                .age-value {
+                    font-size: 2rem;
+                    font-weight: 800;
+                    color: var(--primary-color);
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    line-height: 1;
+                    margin-bottom: 5px;
+                }
+        
+                .age-label {
+                    font-size: 0.75rem;
+                    color: #666;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    font-weight: 600;
+                    opacity: 0.8;
+                }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+                    .tabs {
+                        flex-direction: column;
+                        padding: 12px;
+                    }
+                    
+                    .conversion-grid {
+                        grid-template-columns: 1fr;
+                    }
+                    
+                    .age-display {
+                        grid-template-columns: 1fr;
+                    }
+                    
+                    h1 {
+                        font-size: 2rem;
+                    }
+                    
+                    .tool-card {
+                        padding: 20px;
+                    }
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧰 Daily Utility Toolkit</h1>
+            <p class="subtitle">Three essential tools for everyday use</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTool('unit-converter')">📏 Unit Converter</button>
+            <button class="tab" onclick="showTool('bill-split')">💰 Bill Split</button>
+            <button class="tab" onclick="showTool('age-calculator')">📅 Age Calculator</button>
+        </div>
+
+        <!-- Unit Converter Tool -->
+        <div id="unit-converter" class="tool-section active">
+            <div class="tool-card">
+                <div class="tool-title">📏 Unit Converter</div>
+                <p>Convert between different units of measurement.</p>
+                
+                <div class="conversion-grid">
+                    <div>
+                        <label for="length-value">Length (meters)</label>
+                        <input type="number" id="length-value" placeholder="Enter meters">
+                        <div style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                            <span id="length-cm">0 cm</span> | 
+                            <span id="length-km">0 km</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="weight-value">Weight (kilograms)</label>
+                        <input type="number" id="weight-value" placeholder="Enter kilograms">
+                        <div style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                            <span id="weight-g">0 g</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="temp-c">Temperature (Celsius)</label>
+                    <input type="number" id="temp-c" placeholder="Enter Celsius">
+                    <div style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        <span id="temp-f">0 °F</span>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="convertUnits()">Convert</button>
+                    <button class="btn btn-secondary" onclick="clearUnits()">Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bill Split Calculator -->
+        <div id="bill-split" class="tool-section">
+            <div class="tool-card">
+                <div class="tool-title">💰 Bill Split Calculator</div>
+                <p>Split bills fairly among friends or family.</p>
+
+                <div class="form-group">
+                    <label for="bill-total">Total Bill Amount ($)</label>
+                    <input type="number" id="bill-total" placeholder="Enter total amount">
+                </div>
+
+                <div class="form-group">
+                    <label for="people-count">Number of People</label>
+                    <input type="number" id="people-count" placeholder="Enter number of people">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="include-tip">
+                    <label for="include-tip">Include Tip</label>
+                </div>
+
+                <div class="form-group" id="tip-section" style="display: none;">
+                    <label for="tip-percentage">Tip Percentage (%)</label>
+                    <input type="number" id="tip-percentage" placeholder="Enter tip percentage" value="15">
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="calculateBill()">Calculate</button>
+                    <button class="btn btn-secondary" onclick="clearBill()">Clear</button>
+                </div>
+
+                <div id="bill-result" class="result"></div>
+            </div>
+        </div>
+
+        <!-- Age Calculator -->
+        <div id="age-calculator" class="tool-section">
+            <div class="tool-card">
+                <div class="tool-title">📅 Age Calculator</div>
+                <p>Calculate your exact age in years, months, and days.</p>
+
+                <div class="form-group">
+                    <label for="birth-date">Date of Birth</label>
+                    <input type="date" id="birth-date">
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="calculateAge()">Calculate Age</button>
+                    <button class="btn btn-secondary" onclick="clearAge()">Clear</button>
+                </div>
+
+                <div id="age-display" class="age-display" style="display: none;">
+                    <div class="age-box">
+                        <div class="age-value" id="years">0</div>
+                        <div class="age-label">Years</div>
+                    </div>
+                    <div class="age-box">
+                        <div class="age-value" id="months">0</div>
+                        <div class="age-label">Months</div>
+                    </div>
+                    <div class="age-box">
+                        <div class="age-value" id="days">0</div>
+                        <div class="age-label">Days</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function showTool(toolId) {
+            // Hide all tool sections
+            const sections = document.querySelectorAll('.tool-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(toolId).classList.add('active');
+
+            // Update tab styles
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Find and activate the clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Unit Converter Logic
+        function convertUnits() {
+            const length = parseFloat(document.getElementById('length-value').value) || 0;
+            const weight = parseFloat(document.getElementById('weight-value').value) || 0;
+            const tempC = parseFloat(document.getElementById('temp-c').value) || 0;
+
+            // Length conversions
+            const cm = length * 100;
+            const km = length / 1000;
+            document.getElementById('length-cm').textContent = `${cm.toFixed(2)} cm`;
+            document.getElementById('length-km').textContent = `${km.toFixed(6)} km`;
+
+            // Weight conversions
+            const grams = weight * 1000;
+            document.getElementById('weight-g').textContent = `${grams.toFixed(2)} g`;
+
+            // Temperature conversions
+            const fahrenheit = (tempC * 9/5) + 32;
+            document.getElementById('temp-f').textContent = `${fahrenheit.toFixed(2)} °F`;
+        }
+
+        function clearUnits() {
+            document.getElementById('length-value').value = '';
+            document.getElementById('weight-value').value = '';
+            document.getElementById('temp-c').value = '';
+            document.getElementById('length-cm').textContent = '0 cm';
+            document.getElementById('length-km').textContent = '0 km';
+            document.getElementById('weight-g').textContent = '0 g';
+            document.getElementById('temp-f').textContent = '0 °F';
+        }
+
+        // Bill Split Calculator Logic
+        document.getElementById('include-tip').addEventListener('change', function() {
+            const tipSection = document.getElementById('tip-section');
+            if (this.checked) {
+                tipSection.style.display = 'block';
+            } else {
+                tipSection.style.display = 'none';
+            }
+        });
+
+        function calculateBill() {
+            const total = parseFloat(document.getElementById('bill-total').value);
+            const people = parseInt(document.getElementById('people-count').value);
+            const includeTip = document.getElementById('include-tip').checked;
+            const tipPercentage = parseFloat(document.getElementById('tip-percentage').value) || 0;
+
+            const resultDiv = document.getElementById('bill-result');
+
+            if (isNaN(total) || isNaN(people) || people <= 0) {
+                resultDiv.textContent = 'Please enter valid values for total amount and number of people.';
+                resultDiv.className = 'result show';
+                return;
+            }
+
+            let finalTotal = total;
+            if (includeTip && tipPercentage > 0) {
+                finalTotal = total + (total * tipPercentage / 100);
+            }
+
+            const perPerson = finalTotal / people;
+
+            resultDiv.innerHTML = `
+                <strong>Results:</strong><br>
+                Total with tip: $${finalTotal.toFixed(2)}<br>
+                Per person: $${perPerson.toFixed(2)}
+            `;
+            resultDiv.className = 'result show';
+        }
+
+        function clearBill() {
+            document.getElementById('bill-total').value = '';
+            document.getElementById('people-count').value = '';
+            document.getElementById('include-tip').checked = false;
+            document.getElementById('tip-percentage').value = '15';
+            document.getElementById('tip-section').style.display = 'none';
+            document.getElementById('bill-result').textContent = '';
+            document.getElementById('bill-result').className = 'result';
+        }
+
+        // Age Calculator Logic
+        function calculateAge() {
+            const birthDateInput = document.getElementById('birth-date').value;
+            const resultDiv = document.getElementById('age-display');
+
+            if (!birthDateInput) {
+                alert('Please select a date of birth.');
+                return;
+            }
+
+            const birthDate = new Date(birthDateInput);
+            const today = new Date();
+
+            // Check if birth date is in the future
+            if (birthDate > today) {
+                alert('Please enter a valid date of birth (not in the future).');
+                return;
+            }
+
+            // Calculate age
+            let years = today.getFullYear() - birthDate.getFullYear();
+            let months = today.getMonth() - birthDate.getMonth();
+            let days = today.getDate() - birthDate.getDate();
+
+            // Adjust if the current month/day is before the birth month/day
+            if (days < 0) {
+                months--;
+                // Get the last day of the previous month
+                const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += lastMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // Display results
+            document.getElementById('years').textContent = years;
+            document.getElementById('months').textContent = months;
+            document.getElementById('days').textContent = days;
+            
+            resultDiv.style.display = 'grid';
+        }
+
+        function clearAge() {
+            document.getElementById('birth-date').value = '';
+            document.getElementById('age-display').style.display = 'none';
+        }
+
+        // Initialize tip section visibility
+        document.getElementById('tip-section').style.display = 'none';
+    </script>
+</body>
+</html>
